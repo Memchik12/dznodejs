@@ -1,14 +1,18 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {Route} from "react-router-dom";
 import UserProvider from "./components/UserComponets/context/UserContext.jsx";
+import UsersListPage from "./page/user/UsersListPage.jsx";
+import NotFoundPage from "./page/shared/NotFoundPage.jsx";
+import LoginPartial from "./components/UserComponets/ui/partial/LoginPartial.jsx";
+import UserHeaderPage from "./components/UserComponets/ui/UserHeaderPage.jsx";
 
-function App() {
+function App()
+{
   const [count, setCount] = useState(0)
 
   return (
-    <>
+<>
         <UserProvider>
             <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '400px', margin: '0 auto' }}>
                 <UserHeaderPage />
@@ -17,8 +21,10 @@ function App() {
                     <LoginPartial />
                 </main>
             </div>
-            </UserProvider>
+
+        </UserProvider>
+</>
+
   )
 }
-
 export default App
