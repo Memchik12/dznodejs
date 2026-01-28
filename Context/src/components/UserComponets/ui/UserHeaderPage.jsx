@@ -4,22 +4,21 @@ import {useUserContext} from "../context/UserContext.jsx";
 export default function  UserHeaderPage (){
 
     const { user, logOut } = useUserContext();
-   console.log(user);
+
 
     return (
-        <header style={{ padding: '10px', borderBottom: '1px solid #ccc', marginBottom: '20px' }}>
-            {user ? (
-                <div>
-                    <span>Привет,
-                        <strong>
-                            <div key={user.id}>{user.name}</div>
-                        </strong>!
-                    </span>
-                    <button onClick={logOut}>Выйти</button>
-                </div>
-            ) : (
-                <span>Гость</span>
-            )}
+        <header style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 20px', background: '#f4f4f4' }}>
+            <h1>My App</h1>
+            <div>
+                {user ? (
+                    <>
+                        <span>Привет, <strong>{user.name}</strong>! </span>
+                        <button onClick={logOut}>Выйти</button>
+                    </>
+                ) : (
+                    <span>Гость</span>
+                )}
+            </div>
         </header>
     );
 };

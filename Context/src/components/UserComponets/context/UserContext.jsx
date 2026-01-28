@@ -20,7 +20,7 @@ export default function UserProvider({ children })
             const users = await response.json();
 
             // Ищем пользователя в полученном массиве
-            const foundUser = users.find(u => u.name.toLowerCase() === username.toLowerCase());
+            const foundUser = users.find(u => u.name === username);
 
             if (foundUser) {
                 setUser(foundUser); // Сохраняем весь объект пользователя из API
@@ -45,4 +45,14 @@ export default function UserProvider({ children })
         </UserContext>
     );
 };
-export const useUserContext = () => useContext(UserContext);
+
+export const useUserContext = () => {
+    const context = useContext(UserContext);
+
+    // Если контекст не найден, выводим понятную ошибку в консоль
+    if (context === undefined) {
+        throw new Error('useUserContext must be used within a UserProvider');
+    }
+
+    return context;
+};

@@ -6,6 +6,7 @@ export default function LoginPartial () {
     const { logIn, user, loading, error } = useUserContext();
 
     if (user) return null;
+    console.log(error);
 
     return (
         <div style={{ padding: '20px', border: '1px solid #ddd' }}>
@@ -22,7 +23,7 @@ export default function LoginPartial () {
             </button>
 
             {/* Вывод ошибки, если пользователь не найден */}
-            {error && <p style={{ color: 'red', fontSize: '12px' }}>{error}</p>}
+            {error && <p style={{ color: 'red', fontSize: '12px' }}>{"loginPartial - "+ error.message}</p>}
         </div>
     );
 };
