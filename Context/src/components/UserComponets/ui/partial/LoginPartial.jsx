@@ -3,7 +3,7 @@ import {useUserContext} from '../../context/UserContext.jsx';
 import {MOCK_API_USERS_URL} from "../../../config.js";
 import * as test from "node:test";
 
-export default function LoginPartial () {
+export default function LoginPartial_NEW () {
     const [inputValueEmail, setInputValueEmail] = useState('');
     const [inputValuePassword, setInputValuePassword] = useState('');
     const { user, logIn,register, errorContext, loadContext} = useUserContext();
@@ -24,7 +24,6 @@ export default function LoginPartial () {
 
     const handleSubmit = async (e) =>
     {
-
         e.preventDefault();
         setError(null);
         setLoading(true);
@@ -40,19 +39,20 @@ export default function LoginPartial () {
                 const reg = register(formData.name,formData.email,formData.password)
                 if (reg.then(
                     (value)=>{console.log(value);
-                    }) !== false)
+                    }) === null)
                 {
                     setIsLogin(true);
                 }
                 else {
                     setError("Данный Email уже используется");
-                    console.log(error);
-                    setLoading(false);
                     return
                 };
             }
         } catch (error) {
             setError(error);
+        }
+        finally {
+            setLoading(false);
         }
 
 
@@ -78,8 +78,8 @@ export default function LoginPartial () {
             </form>
 
 
-            {error !== '' ? <p style={{ color: error ? 'red' : 'green', marginTop: '10px' }}>
-                {error}</p> : null
+            {error !== '' ? <span style={{ color: error ? 'red' : 'green', marginTop: '10px' }}>
+                    {error}</span> : null
 
             }
 

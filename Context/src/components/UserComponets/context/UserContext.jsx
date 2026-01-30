@@ -65,6 +65,9 @@ export default function UserProvider({ children })
         catch (error) {
             setError(error)
         }
+        finally {
+            setLoading(false);
+        }
 
 
     }

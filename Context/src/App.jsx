@@ -3,8 +3,6 @@ import './App.css'
 import UserProvider from "./components/UserComponets/context/UserContext.jsx";
 import LoginPartial from "./components/UserComponets/ui/partial/LoginPartial.jsx";
 import UserHeaderPage from "./components/UserComponets/ui/UserHeaderPage.jsx";
-import Auth from "./components/UserComponets/ui/Auth.jsx";
-import LoginPartial_NEW from "./components/UserComponets/ui/partial/LoginPartial_NEW.jsx";
 
 function App()
 {
