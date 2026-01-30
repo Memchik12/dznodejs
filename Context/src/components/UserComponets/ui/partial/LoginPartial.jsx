@@ -24,6 +24,7 @@ export default function LoginPartial () {
 
     const handleSubmit = async (e) =>
     {
+
         e.preventDefault();
         setError(null);
         setLoading(true);
