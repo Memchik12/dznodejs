@@ -11,27 +11,62 @@ export default function UserProvider({ children })
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const logIn = async (username) => {
+    const logIn = async (email, password) => {
         setLoading(true);
         setError(null);
 
         try {
-            const response = await fetch(MOCK_API_USERS_URL);
+            const response = await fetch(`${MOCK_API_USERS_URL}`);
             const users = await response.json();
-
-            // Ищем пользователя в полученном массиве
-            const foundUser = users.find(u => u.name === username);
+            const foundUser = users.find(u => u.password === password && u.email === email);
 
             if (foundUser) {
                 setUser(foundUser); // Сохраняем весь объект пользователя из API
+                setLoading(false)
             } else {
-                setError("Пользователь не найден");
+                setError('Неверный email или пароль');
+                return error;
             }
         } catch (err) {
             setError(err);
-        } finally {
-            setLoading(false);
+            return error;
         }
+
+    }
+
+    const register = async (name,email, password) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const users =
+                await fetch(`${MOCK_API_USERS_URL}`)
+                    .then((response) => {
+                        return response.json();
+                    });
+            const foundUser = users.find(u => u.email === email);
+            if (foundUser) {
+                setError("Данный Email уже используется")
+                return false;
+            }
+            const newUser = {
+                createdAt: new Date().toISOString(),
+                name: name,
+                avatar: "https://i.pravatar.cc/150?u=" + email, // Динамическая заглушка
+                email: email,
+                password: password
+            };
+
+            const response = await fetch(MOCK_API_USERS_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newUser)
+            });
+        }
+        catch (error) {
+            setError(error)
+        }
+
+
     }
 
     const logOut = () => {
@@ -40,7 +75,7 @@ export default function UserProvider({ children })
     };
 
     return (
-        <UserContext Userid={id} value={{ user, logIn, logOut, loading, error }}>
+        <UserContext Userid={id} value={{ user, logIn, logOut,register, loading, error }}>
             {children}
         </UserContext>
     );

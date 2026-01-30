@@ -25,21 +25,14 @@ export default function Auth ()
     const handleSubmit = async (e) =>
     {
         e.preventDefault();
-        setLoading({ text: 'Загрузка...', isError: false });
-
+        setLoading(true);
+        console.log(loading);
 
         try {
             if (isLogin) {
                 // ВХОД
-                const response = await fetch(`${MOCK_API_USERS_URL}?email=${formData.email}`);
-                const users = await response.json();
-                const foundUser = users.find(u => u.password === formData.password);
+                logIn(formData.email,formData.password);
 
-                if (foundUser) {
-                    logIn(foundUser); // Отправляем данные в контекст
-                } else {
-                    setError('Неверный email или пароль');
-                }
             } else {
                 // РЕГИСТРАЦИЯ
                 const newUser = {
@@ -65,7 +58,8 @@ export default function Auth ()
             console.log(error);
             setError(error.message);
         }
-
+        setLoading(false);
+        console.log(loading);
 
     };
     return (
@@ -94,9 +88,7 @@ export default function Auth ()
                 </p>
             )}
             {/* Вывод сообщения вместо alert */}
-            {loading && (
-                <p> loading...</p>
-            )}
+            {loading ? <p> loading...</p> : null}
 
             <button
                 onClick={() => { setIsLogin(!isLogin); }}
